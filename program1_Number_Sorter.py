@@ -1,5 +1,5 @@
 # Program 1: Number Sorter
-# Create a program that ask 4 numbers. 
+# Create a program that ask 4 numbers.
 # Print the 4 numbers from highest to lowest using only if-else statement.
 
 def get_input():
@@ -23,7 +23,7 @@ def input_validation(first_try, second_try, third_try, fourth_try):
 
             if (third_int - int(third_int) == 0):
                 third_int = int(third_int)
-            
+
             if (fourth_int - int(fourth_int) == 0):
                 fourth_int = int(fourth_int)
 
@@ -36,5 +36,47 @@ def input_validation(first_try, second_try, third_try, fourth_try):
         print("\nEmpty input is invalid. Please try again.")
         return False, False, False
 
+
+def number_order(first_no, second_no, third_no, fourth_no):
+    if first_no < second_no:
+        small_first_pair = first_no
+        high_first_pair = second_no
+    else:
+        small_first_pair = second_no
+        high_first_pair = first_no
+
+    if third_no < fourth_no:
+        small_second_pair = third_no
+        high_second_pair = fourth_no
+    else:
+        small_second_pair = fourth_no
+        high_second_pair = third_no
+
+    if small_first_pair < small_second_pair:
+        least_num = small_first_pair
+        mid_num_a = small_second_pair
+    else:
+        least_num = small_second_pair
+        mid_num_a = small_first_pair
+
+    if high_first_pair > high_second_pair:
+        greatest_num = high_first_pair
+        mid_num_b = high_second_pair
+    else:
+        greatest_num = high_second_pair
+        mid_num_b = high_first_pair
+
+    if mid_num_a < mid_num_b:
+        return (least_num, mid_num_a, mid_num_b, greatest_num)
+    else:
+        return (least_num, mid_num_b, mid_num_a, greatest_num)
+
+
 first, second, third, fourth = get_input()
-first_valid, second_valid, third_valid, fourth_valid = input_validation(first, second, third, fourth)
+first_valid, second_valid, third_valid, fourth_valid = input_validation(
+    first, second, third, fourth)
+if (first_valid != False) and (second_valid != False) and (third_valid != False):
+    least, lesser, greater, greatest = number_order(
+        first_valid, second_valid, third_valid, fourth_valid)
+    print(
+        f"\nThe order of numbers from highest to lowest is:   {greatest}, {greater}, {lesser}, {least}")
