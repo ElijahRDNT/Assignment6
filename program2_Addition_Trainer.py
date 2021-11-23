@@ -17,17 +17,48 @@ def generate_number():
     return first_number, second_number
 
 
+def input_validation(user_input):
+    if user_input != "":
+        try:
+            user_input = int(user_input)
+            return user_input
+        
+        except ValueError:
+            print("\nError. Invalid input.\n")
+            return False
+    else:
+        print("Empty input is invalid.\n")
+        return False
+
 def quiz_proper():
     score = 0
     for question_number in range(1, 11):
         num_first, num_second = generate_number()
-        answer = float(
-            input(f"{question_number}.)  {num_first} + {num_second} = "))
+        answer1 = input(f"{question_number}.)  {num_first} + {num_second} = ")
+        answer = input_validation(answer1)
+        while answer == False:
+            answer = 0
+            trials = 0
+            print("Note: You only have 3 attempts to correct your answer.")
+            for trials in range(1, 4):
+                if 0 < trials < 4:
+                    print(f"Attempt No. {trials}")
+                    answer1 = input(f"{question_number}.)  {num_first} + {num_second} = ")
+                    answer = input_validation(answer1)
+                    correct_answer = num_first + num_second
+                    if answer != False:
+                        break
+            
+                    if trials == 3:
+                        print("Sorry. Game is terminated due to multiple unnecessary/invalid inputs.")
+                        return False 
+                else:
+                    break
+                
         correct_answer = num_first + num_second
         if answer == correct_answer:
             print("Correct!\n")
             score = score + 1
-
         else:
             print(f"Incorrect. The correct answer is {correct_answer}.\n")
 
@@ -43,5 +74,6 @@ def score_computation(score_compute):
 
 system_header()
 current_score = quiz_proper()
-final_rating = score_computation(current_score)
-print(f"Total score:    {final_rating}")
+if current_score != False:
+    final_rating = score_computation(current_score)
+    print(f"Total score:    {final_rating}")
